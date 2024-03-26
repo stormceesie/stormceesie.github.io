@@ -1,12 +1,11 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
 let scene, camera, renderer;
 
 function init() {
-    const loader = new GLTFLoader();
-
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xaaaaaa); // Zet een achtergrondkleur
+    scene.background = new THREE.Color(0xaaaaaa); // Stel een achtergrondkleur in
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 5;
@@ -14,7 +13,7 @@ function init() {
     const container = document.getElementById('model-container');
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(container.clientWidth, container.clientHeight);
-    container.appendChild(renderer.domElement);  // Deze regel is voldoende om de renderer toe te voegen aan de container
+    container.appendChild(renderer.domElement); // Voeg de renderer toe aan de container
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
@@ -23,7 +22,9 @@ function init() {
     directionalLight.position.set(0, 1, 0); // Aanpassen naar behoefte
     scene.add(directionalLight);
 
-    loader.load('path/to/VoortmanLogo.glb', function(gltf) {
+    // Laad je GLB-bestand
+    const loader = new GLTFLoader();
+    loader.load('Models/VoortmanLogo.glb', function(gltf) {
         scene.add(gltf.scene);
     }, undefined, function(error) {
         console.error(error);
