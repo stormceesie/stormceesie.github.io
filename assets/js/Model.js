@@ -1,7 +1,10 @@
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 let scene, camera, renderer;
 
 function init() {
+    const loader = new GLTFLoader();
+
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0xaaaaaa); // Zet een achtergrondkleur
 
@@ -20,8 +23,6 @@ function init() {
     directionalLight.position.set(0, 1, 0); // Aanpassen naar behoefte
     scene.add(directionalLight);
 
-    // Zorg voor een toegankelijk pad naar je GLB-bestand
-    const loader = new THREE.GLTFLoader();
     loader.load('path/to/VoortmanLogo.glb', function(gltf) {
         scene.add(gltf.scene);
     }, undefined, function(error) {
