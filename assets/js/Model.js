@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 let scene, camera, renderer;
 
 function init() {
@@ -22,7 +23,6 @@ function init() {
     // Zorg voor een toegankelijk pad naar je GLB-bestand
     const loader = new THREE.GLTFLoader();
     loader.load('path/to/VoortmanLogo.glb', function(gltf) {
-        gltf.scene.scale.set(0.01, 0.01, 0.01); // Pas de schaal aan indien nodig
         scene.add(gltf.scene);
     }, undefined, function(error) {
         console.error(error);
