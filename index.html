@@ -43,8 +43,8 @@
 								<li><a href="#" class="button">Learn More</a></li>
 							</ul>
 						</div>
-						<div class="image">
-							<img src="images/VRBRIL.jpg" alt="Woman with VR headset">
+						<div class="image" id="3d-model">
+							
 						</div>
 					</section>
 
@@ -2825,60 +2825,41 @@ print 'It took ' + i + ' iterations to sort the deck.';
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script type="module">
-				import * as THREE from 'https://unpkg.com/three/build/three.module.js';
-			  
-				let scene, camera, renderer, cube;
-			  
-				function init() {
-				  // Scène opzetten
-				  scene = new THREE.Scene();
-				  scene.background = new THREE.Color(0xffffff); // Achtergrond wit maken
-			  
-				  // Camera opzetten
-				  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-				  camera.position.z = 5;
-			  
-				  // Renderer opzetten en koppelen aan het canvas
-				  const canvas = document.getElementById('modelCanvas');
-				  renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-				  renderer.setSize(window.innerWidth, window.innerHeight); // Gebruik de viewport grootte
-				  document.body.appendChild(renderer.domElement);
-			  
-				  // Een eenvoudige kubus toevoegen
-				  const geometry = new THREE.BoxGeometry();
-				  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-				  cube = new THREE.Mesh(geometry, material);
-				  scene.add(cube);
-			  
-				  // Luister naar het venster resize event om de renderer en camera bij te werken
-				  window.addEventListener('resize', onWindowResize, false);
-			  
-				  animate();
-				}
-			  
-				function animate() {
-				  requestAnimationFrame(animate);
-			  
-				  // Kubus animatie
-				  cube.rotation.x += 0.01;
-				  cube.rotation.y += 0.01;
-			  
-				  renderer.render(scene, camera);
-				}
-			  
-				function onWindowResize() {
-				  // Pas de camera en renderer aan op de nieuwe venstergrootte
-				  camera.aspect = window.innerWidth / window.innerHeight;
-				  camera.updateProjectionMatrix();
-				  renderer.setSize(window.innerWidth, window.innerHeight);
-				}
-			  
-				init();
-			  </script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+			<script>
+				// Creeër een scene
+				var scene = new THREE.Scene();
 
-		<!-- Note: Only needed for demo purposes. Delete for production sites. -->
-			<script src="assets/js/demo.js"></script>
+				// Creeër een camera
+				var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+				camera.position.z = 5;
+
+				// Creeër een renderer
+				var renderer = new THREE.WebGLRenderer();
+				renderer.setSize(document.getElementById("3d-model").offsetWidth, document.getElementById("3d-model").offsetHeight);
+				document.getElementById("3d-model").appendChild(renderer.domElement);
+
+				// Creeër een geometrie (bijv. een kubus)
+				var geometry = new THREE.BoxGeometry();
+
+				// Creeër een materiaal
+				var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+				// Creeër een mesh door de geometrie en het materiaal te combineren
+				var cube = new THREE.Mesh(geometry, material);
+
+				// Voeg de mesh toe aan de scene
+				scene.add(cube);
+
+				// Render loop
+				function animate() {
+					requestAnimationFrame(animate);
+					cube.rotation.x += 0.01;
+					cube.rotation.y += 0.01;
+					renderer.render(scene, camera);
+				}
+				animate();
+			</script>
 
 	</body>
 </html>
