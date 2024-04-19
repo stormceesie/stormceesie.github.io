@@ -39,19 +39,6 @@ body {
     display: block;
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.model {
-    width: 50%; /* Pas dit aan op basis van je eigen ontwerp */
-    height: 100%;
-    border: 1px solid #ccc; /* Voeg een rand toe voor visuele scheiding */
-}
-
 ol, ul {
 	list-style: none;
 }
