@@ -8,10 +8,11 @@
 -->
 <html>
 	<head>
-		<title>Story by HTML5 UP</title>
+		<title>ZVVH experience innovation!</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="icon" type="image/x-icon" href="images/small.ico" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -43,8 +44,12 @@
 								<li><a href="#" class="button">Learn More</a></li>
 							</ul>
 						</div>
+<<<<<<< HEAD
+						<div class="image canvas-container" id="3d-model">
+=======
 						<div class="image">
 							<img src="images/VRBRIL.jpg" alt="Woman with VR headset">
+>>>>>>> parent of 173ca72 (3D model loader)
 						</div>
 					</section>
 
@@ -2825,9 +2830,150 @@ print 'It took ' + i + ' iterations to sort the deck.';
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+<<<<<<< HEAD
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+			<script>
+				// Creeër een scene
+				var scene = new THREE.Scene();
+
+				// Creeër een camera
+				var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+				camera.position.z = 5;
+
+				// Creeër een renderer
+				var renderer = new THREE.WebGLRenderer();
+				renderer.setSize(document.getElementById("3d-model").offsetWidth, document.getElementById("3d-model").offsetHeight);
+				renderer.shadowMap.enabled = true; // Schaduwmap inschakelen
+				document.getElementById("3d-model").appendChild(renderer.domElement);
+
+				// Creeër een geometrie (bijv. een kubus)
+				var geometry = new THREE.BoxGeometry();
+
+				// Creeër een materiaal
+				var material = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Gebruik MeshStandardMaterial voor schaduwen
+
+				// Creeër een mesh door de geometrie en het materiaal te combineren
+				var cube = new THREE.Mesh(geometry, material);
+				cube.castShadow = true; // Het object werpt schaduw
+				scene.add(cube);
+
+				// Voeg een lichtbron toe
+				var light = new THREE.DirectionalLight(0xffffff, 1);
+				light.position.set(10, 10, 10);
+				light.castShadow = true; // De lichtbron werpt schaduw
+				scene.add(light);
+
+				// Voeg een ambient lichtbron toe om de schaduwen minder hard te maken
+				var ambientLight = new THREE.AmbientLight(0x404040); // Zacht wit licht
+				scene.add(ambientLight);
+
+				// Roep de setCanvasHeight functie aan bij het laden van de pagina en wanneer het venster wordt hertekend
+				window.addEventListener('DOMContentLoaded', setCanvasHeight);
+				window.addEventListener('resize', setCanvasHeight);
+
+				// Render loop
+				function animate() {
+					requestAnimationFrame(animate);
+					renderer.render(scene, camera);
+				}
+				animate();
+
+				// Voeg muisinteractie toe
+				var mouseDown = false, mouseX = 0, mouseY = 0;
+				document.addEventListener("mousedown", function(event) {
+					mouseDown = true;
+					mouseX = event.clientX;
+					mouseY = event.clientY;
+				});
+				document.addEventListener("mouseup", function() {
+					mouseDown = false;
+				});
+				document.addEventListener("mousemove", function(event) {
+					if (!mouseDown) return;
+					var deltaX = event.clientX - mouseX,
+						deltaY = event.clientY - mouseY;
+					mouseX = event.clientX;
+					mouseY = event.clientY;
+					cube.rotation.y += deltaX * 0.01;
+					cube.rotation.x += deltaY * 0.01;
+				});
+
+				window.addEventListener('resize', function() {
+					var width = window.innerWidth;
+					var height = window.innerHeight;
+					renderer.setSize(width, height);
+					camera.aspect = width / height;
+					camera.updateProjectionMatrix();
+				});
+
+				// Functie om de hoogte van het canvas dynamisch in te stellen op basis van de breedte van de container
+				function setCanvasHeight() {
+					var canvasContainer = document.querySelector('.canvas-container');
+					var canvas = canvasContainer.querySelector('canvas');
+					var width = canvasContainer.offsetWidth;
+					var aspectRatio = 1; // 4:3 aspect ratio (breedte:hoogte)
+
+					// Stel de hoogte van het canvas in op basis van de breedte en de aspect ratio
+					canvas.style.height = (width * aspectRatio) + 'px';
+				}
+
+			</script>
+=======
+			<script type="module">
+				import * as THREE from 'https://unpkg.com/three/build/three.module.js';
+			  
+				let scene, camera, renderer, cube;
+			  
+				function init() {
+				  // Scène opzetten
+				  scene = new THREE.Scene();
+				  scene.background = new THREE.Color(0xffffff); // Achtergrond wit maken
+			  
+				  // Camera opzetten
+				  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+				  camera.position.z = 5;
+			  
+				  // Renderer opzetten en koppelen aan het canvas
+				  const canvas = document.getElementById('modelCanvas');
+				  renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+				  renderer.setSize(window.innerWidth, window.innerHeight); // Gebruik de viewport grootte
+				  document.body.appendChild(renderer.domElement);
+			  
+				  // Een eenvoudige kubus toevoegen
+				  const geometry = new THREE.BoxGeometry();
+				  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+				  cube = new THREE.Mesh(geometry, material);
+				  scene.add(cube);
+			  
+				  // Luister naar het venster resize event om de renderer en camera bij te werken
+				  window.addEventListener('resize', onWindowResize, false);
+			  
+				  animate();
+				}
+			  
+				function animate() {
+				  requestAnimationFrame(animate);
+			  
+				  // Kubus animatie
+				  cube.rotation.x += 0.01;
+				  cube.rotation.y += 0.01;
+			  
+				  renderer.render(scene, camera);
+				}
+			  
+				function onWindowResize() {
+				  // Pas de camera en renderer aan op de nieuwe venstergrootte
+				  camera.aspect = window.innerWidth / window.innerHeight;
+				  camera.updateProjectionMatrix();
+				  renderer.setSize(window.innerWidth, window.innerHeight);
+				}
+			  
+				init();
+			  </script>
 
 		<!-- Note: Only needed for demo purposes. Delete for production sites. -->
 			<script src="assets/js/demo.js"></script>
+>>>>>>> parent of 173ca72 (3D model loader)
 
 	</body>
 </html>
